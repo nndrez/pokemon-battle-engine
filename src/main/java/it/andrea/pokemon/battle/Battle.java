@@ -7,8 +7,8 @@ import it.andrea.pokemon.model.rules.IGenerationRuleset;
  */
 public class Battle {
 
-    private final Battler player1;
-    private final Battler player2;
+    private final Battler humanPlayer;
+    private final Battler computerPlayer;
     private final IGenerationRuleset ruleset;
 
     private Battler attacker;
@@ -16,19 +16,19 @@ public class Battle {
 
     private int turnCounter;
 
-    public Battle(Battler player1, Battler player2, IGenerationRuleset ruleset) {
-        this.player1 = player1;
-        this.player2 = player2;
+    public Battle(Battler humanPlayer, Battler computerPlayer, IGenerationRuleset ruleset) {
+        this.humanPlayer = humanPlayer;
+        this.computerPlayer = computerPlayer;
         this.ruleset = ruleset;
         this.turnCounter = 1;
     }
 
-    public Battler getPlayer1() {
-        return player1;
+    public Battler getHumanPlayer() {
+        return humanPlayer;
     }
 
-    public Battler getPlayer2() {
-        return player2;
+    public Battler getComputerPlayer() {
+        return computerPlayer;
     }
 
     public Battler getAttacker() {

@@ -19,8 +19,19 @@ public class Attempt implements IAttempt {
         after = new NoEffect();
     }
 
+    public Attempt(ICondition<Battle> accuracy, IEffect onHit, IEffect onMiss, IEffect after) {
+        this.accuracy = accuracy;
+        this.onHit = onHit;
+        this.onMiss = onMiss;
+        this.after = after;
+    }
+
     public static Attempt of(ICondition<Battle> accuracy, IEffect onHit) {
         return new Attempt(accuracy, onHit);
+    }
+
+    public static Attempt of(ICondition<Battle> accuracy, IEffect onHit, IEffect onMiss, IEffect after) {
+        return new Attempt(accuracy, onHit, onMiss, after);
     }
 
     @Override

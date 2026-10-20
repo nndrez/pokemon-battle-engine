@@ -31,10 +31,10 @@ public class Main {
                 .specialDefense(65)
                 .speed(45)
                 .build();
-        Battler player1 = new Battler("Bulbasaur", List.of(PokemonType.GRASS, PokemonType.POISON), 5, bulbasaurStats);
-        player1.learnMove(moveRegistry.getMove("tackle"));
-        player1.learnMove(moveRegistry.getMove("vine whip"));
-        player1.learnMove(moveRegistry.getMove("tail whip"));
+        Battler humanPlayer = new Battler("Bulbasaur", List.of(PokemonType.GRASS, PokemonType.POISON), 5, bulbasaurStats);
+        humanPlayer.learnMove(moveRegistry.getMove("tackle"));
+        humanPlayer.learnMove(moveRegistry.getMove("vine whip"));
+        humanPlayer.learnMove(moveRegistry.getMove("tail whip"));
 
         PokemonStats charmenderStats = PokemonStats.builder()
                 .maxHp(39)
@@ -44,23 +44,23 @@ public class Main {
                 .specialDefense(50)
                 .speed(65)
                 .build();
-        Battler player2 = new Battler("Charmender", List.of(PokemonType.FIRE), 5, charmenderStats);
-        player2.learnMove(moveRegistry.getMove("scratch"));
-        player2.learnMove(moveRegistry.getMove("ember"));
+        Battler computerPlayer = new Battler("Charmender", List.of(PokemonType.FIRE), 5, charmenderStats);
+        computerPlayer.learnMove(moveRegistry.getMove("scratch"));
+        computerPlayer.learnMove(moveRegistry.getMove("ember"));
 
-        Battle battle = new Battle(player1, player2, generationRuleset);
+        Battle battle = new Battle(humanPlayer, computerPlayer, generationRuleset);
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("--- Start the battle ---");
-        System.out.printf("%s vs %s%n", player1.getName(), player2.getName());
-        printHp(player1, player2);
+        System.out.printf("%s vs %s%n", humanPlayer.getName(), computerPlayer.getName());
+        printHp(humanPlayer, computerPlayer);
 
-        while (player1.getCurrentHp() > 0 && player2.getCurrentHp() > 0) {
+        while (humanPlayer.getCurrentHp() > 0 && computerPlayer.getCurrentHp() > 0) {
             System.out.printf("%nTurn %d%n", battle.getTurnCounter());
 
-            List<Battler> turnOrder = getTurnOrder(player1, player2);
+            List<Battler> turnOrder = getTurnOrder(humanPlayer, computerPlayer);
             for (Battler attacker : turnOrder) {
-                Battler defender = attacker == player1 ? player2 : player1;
+                Battler defender = attacker == humanPlayer ? computerPlayer : humanPlayer;
                 if (attacker.getCurrentHp() <= 0 || defender.getCurrentHp() <= 0) {
                     continue;
                 }
@@ -68,15 +68,15 @@ public class Main {
                 battle.setAttacker(attacker);
                 battle.setDefender(defender);
 
-                IMove selectedMove = chooseMove(attacker, player1, scanner);
+                IMove selectedMove = chooseMove(attacker, humanPlayer, scanner);
                 selectedMove.execute(battle);
-                printHp(player1, player2);
+                printHp(humanPlayer, computerPlayer);
             }
 
             battle.setTurnCounter(battle.getTurnCounter() + 1);
         }
 
-        Battler winner = player1.getCurrentHp() > 0 ? player1 : player2;
+        Battler winner = humanPlayer.getCurrentHp() > 0 ? humanPlayer : computerPlayer;
         System.out.printf("%n%s wins the battle!%n", winner.getName());
     }
 

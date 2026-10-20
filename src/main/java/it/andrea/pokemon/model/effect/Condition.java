@@ -3,9 +3,6 @@ package it.andrea.pokemon.model.effect;
 import it.andrea.pokemon.battle.Battle;
 import it.andrea.pokemon.model.condition.ICondition;
 
-/**
- *
- */
 public class Condition implements IEffect {
 
     private final IEffect onPass;
